@@ -1,0 +1,10 @@
+What is a problem? 
+
+A decision problem is a language. A language is a set of strings. A string is a finite sequence of elements from a finite set.
+
+A function problem is a total function.
+
+Problems motivates algorithms. A problem(heh) with this world, is that almost all algorithm books are based on imperative languages. How can one do some problems in purely functional languages like Haskell effectively, in a functional way?
+
+This motivates me to write a collection of programs to solve classical problems in Haskell. 
+
