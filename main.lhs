@@ -13,6 +13,7 @@
 \usepackage{mathrsfs}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{mathrsfs}
+\usepackage{boxedminipage}
 %\usepackage[x11names, rgb]{xcolor}
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
@@ -56,10 +57,15 @@
 \newtheorem*{remark}{Remark}
 \newtheorem*{note}{Note}
 
+\newenvironment{boxsection}[1]{~\\[-10]
+\begin{center}\begin{boxedminipage}{6in}\noindent \textbf{#1}
+
+}{\end{boxedminipage}\end{center}}
 %opening
 
 \title{Cookbook}
 \date{Last update: \today}
+\author{Chao Xu}
 \begin{document}
 \maketitle
 \setcounter{tocdepth}{1}
@@ -68,15 +74,14 @@
 \section{Exponentiation by squaring}
 
 \begin{problem}
-~\newline
-\noindent \emph{Input}:
-
+yy\begin{boxsection}{Input}
 Given the operator $\cdot$, element $a$ and positive integer $n$. Where $a$ is
 an element of a semigroup under $\cdot$.
+\end{boxsection}
 
-\noindent \emph{Output}:
-
+\begin{boxsection}{Output}
 Find $a^n$, where $a^n = a\cdot a^{n-1}$.
+\end{boxsection}
 \end{problem}
 
 The general method to solve the problem is exponentiation by squaring. It is
@@ -137,14 +142,16 @@ F_{n-1}+F_{n-2}$ in the ring $\Z$. The Fibonacci sequence have a simple implemen
 
 \subsection{Lazy sequence}
 \begin{problem}
-\emph{Input}: 
+\begin{boxsection}{Input}
 \begin{enumerate}
 \item A list of coefficients $[c_1,c_2,\ldots,c_n]$ of a linear recurrence relation.
 \item A list of base cases $[a_0,a_1,\ldots,a_{n-1}]$ of a linear recurrence relation.
 \end{enumerate}
+\end{boxsection}
 
-\emph{Output}:
+\begin{boxsection}{Output}
 The sequence of values of the linear recurrence relation as a infinite list $[a_0,a_1,\ldots$.
+\end{boxsection}
 \end{problem}
 
 Here is a specific implementation where we are working in the ring $\Z$.
@@ -185,6 +192,35 @@ integerPartitions n = part n n
   where part 0 _ = [[]]
         part n k = [(i:is) | i<-[1..min k n], is <- part (n-i) i]
 \end{code}
+
+\section{Find the primitive word in a free monoid}
+\begin{problem}
+
+\begin{boxsection}{Input}
+A word $w$ in a free monid.
+\end{boxsection}
+
+\begin{boxsection}{Output}
+A primitive word $p$, such that $p^n=w$ for some integer $n$.
+\end{boxsection}
+
+\end{problem}
+A word $p$ is primitive if $p=w^k$ implies $k=1$.
+This will use the algorithm in \cite{Czumaj00onthe}.
+\section{Period of a eventually periodic sequence}
+\begin{problem}
+\begin{boxsection}{Input}
+\begin{enumerate}
+  \item A infinite list that represent a eventually periodic sequence.
+  \item A integer of the upper bound of the period.
+\end{enumerate} 
+\end{boxsection}
+
+\begin{boxsection}{Output}
+  A pair of the initial sequence and the periodic part.
+\end{boxsection}
+\end{problem}
+
 \bibliography{bib}
 \bibliographystyle{plain}
 \end{document}

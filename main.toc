@@ -1,8 +1,0 @@
-\contentsline {chapter}{\numberline {1}Algebraic Algorithms}{2}{chapter.1}
-\contentsline {section}{\numberline {1.1}Exponentiation by squaring}{2}{section.1.1}
-\contentsline {section}{\numberline {1.2}Linear homogeneous recurrence relations with constant coefficients}{2}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}Lazy sequence}{3}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}Determine $n$th element in the index}{3}{subsection.1.2.2}
-\contentsline {subsection}{\numberline {1.2.3}Linear Recurrence in Finite Ring}{3}{subsection.1.2.3}
-\contentsline {chapter}{\numberline {2}Combinatorial Algorithms}{4}{chapter.2}
-\contentsline {section}{\numberline {2.1}Integer Partitions}{4}{section.2.1}
