@@ -57,7 +57,7 @@
 \newtheorem*{remark}{Remark}
 \newtheorem*{note}{Note}
 
-\newenvironment{boxsection}[1]{~\\[-10]
+\newenvironment{boxsection}[1]{~\\[-10pt]
 \begin{center}\begin{boxedminipage}{6in}\noindent \textbf{#1}
 
 }{\end{boxedminipage}\end{center}}
@@ -178,8 +178,81 @@ matrix multiplication.
 Linear recurrence is perodic in finite rings. Therefore one might want to
 produce only the periodic part of the ring. [INSERT MORE ON THIS SUBJECT]
 
+\section{A particular kind of recurrence}
+\label{nicerec}
+A common recurrence has the form 
+\[
+a_n = \sum_{i=0}^\infty b_ia_{n-m_i}
+\]
+, where $m_i$ and $b_i$ are both \emph{infinite} sequences. $m_i\in \N$. $a_{-i}=0$ 
+for all positive $i$. This is well defined as long as $b_i, a_i$ are in the
+	same ring.
+
+\begin{problem}
+\begin{boxsection}{Input}
+Infinite sequence $b_i$ and $m_i$, $m_i\in \N$. Finite sequence $c_0,\ldots,c_k$
+\end{boxsection}
+
+\begin{boxsection}{Output}
+The infinite sequence defined as
+
+\[
+a_n = \begin{cases}
+   \sum_{i=0}^\infty b_ia_{n-m_i} &\text{if }n>k\\
+   c_n & \text{if }n\leq k
+	   \end{cases}
+\]
+\end{boxsection}
+\end{problem}
+
+One can use a balanced binary tree to store the entire infinite list, and 
+the time to generate the $n$th element is $O(d(n)\log n)$, where $d$ is the 
+density function of $\{m_i\}$.
+
+Using an array would make it $O(d(n))$, but it is too imperative for our taste, 
+how about we only use list and achieve $O(d(n))$ time, elegantly?
+
+\begin{code}
+import Data.List
+rec :: Num a => [a] -> [a] -> [Int] -> [a]
+rec c b m = a
+  where a    = c++rest
+        rest = next [] 0 m
+        next xs k (m:ms) 
+		  | k == m    = next (a:xs) k ms
+          | otherwise = val ++ next (map tail xs) (k+1) (m:ms)
+          where val = if (k<length c) then [] else [sum $ zipWith (*) (reverse (map head xs)) b]
+\end{code}
+
+It's important to note the base case doesn't have to be a consective set of
+integers. It is better to feed a set of base cases as pairs instead.
+
+
 \chapter{Combinatorial Algorithms}
 \section{Integer Partitions}
+
+\begin{definition}[Integer Partition]
+A integer partition of $n$ is a multiset $\{a_1,\ldots,a_k\}$, such that
+$\sum_{i=1}^k a_i = n$.
+\end{definition}
+
+\begin{definition}[Partition Numbers]
+The sequence of partition numbers $\{p(n)\}$ is the number of integer
+partitions for $n$.
+\end{definition}
+
+
+\begin{problem}
+\begin{boxsection}{Input}
+Integer $n$.
+\end{boxsection}
+
+\begin{boxsection}{Output}
+List of partitions of $n$.
+\end{boxsection}
+
+\end{problem}
+
 To find all possible partition of a integer, we proceed with a simple
 recursive formula.
 
@@ -192,6 +265,46 @@ integerPartitions n = part n n
   where part 0 _ = [[]]
         part n k = [(i:is) | i<-[1..min k n], is <- part (n-i) i]
 \end{code}
+
+\begin{problem}
+\begin{boxsection}{Input}
+None
+\end{boxsection}
+
+\begin{boxsection}{Output}
+The infinite list of partition numbers.
+\end{boxsection}
+
+\end{problem}
+
+Naively, |0:map (length . integerPartitions) [1..]| works well, except the
+time complexity is $O(np(n))$, and $p(n)$ is exponential. A more
+well known approach, that only cost $\sqrt{n}$ additional to generate the
+$n$th number, will be given instead. 
+
+First, extend the definition of the partition number, such that $p(0)=1$ 
+and $p(-n)=0$ for all positive integer $n$. The partition number $p(n)$ has
+the relation
+\[
+p(n) = \sum_{k=0}^\infty (-1)^k (p(n-p_{2k+1})+p(n-p_{2k+2}))
+\]
+where $p_n$ is the sequence of generalized pentagonal number.
+
+We have already developed the tools to work with this kind of recurrence in
+section \label{nicerec}.
+\begin{code}
+
+integers :: [Integer]
+integers = (0:)$ concat $ zipWith (\x y -> [x,y]) [1..] (map negate [1..])
+
+generalizedPentagonalNumbers :: [Integer]
+generalizedPentagonalNumbers = [(3 * n^2 - n) `div` 2|n<-integers]
+
+partitionNumbers :: [Integer]
+partitionNumbers = rec [1] (cycle [1,1,-1,-1]) (tail generalizedPentagonalNumbers)
+\end{code}
+
+
 
 \section{Find the primitive word in a free monoid}
 \begin{problem}
@@ -206,13 +319,16 @@ A primitive word $p$, such that $p^n=w$ for some integer $n$.
 
 \end{problem}
 A word $p$ is primitive if $p=w^k$ implies $k=1$.
-This will use the algorithm in \cite{Czumaj00onthe}.
+This will use the algorithm in \cite{Czumaj00onthe}. [Nah, just KMP...]
+
 \section{Period of a eventually periodic sequence}
 \begin{problem}
 \begin{boxsection}{Input}
 \begin{enumerate}
-  \item A infinite list that represent a eventually periodic sequence.
-  \item A integer of the upper bound of the period.
+  \item A integer of the upper bound $u$ of the period.
+  \item A infinite list that represent a eventually periodic sequence, such
+  that if two finite sequence of length $u$ are equal and the starting index is less than 
+  $u$ apart, then they must be inside the periodic part of the sequence.
 \end{enumerate} 
 \end{boxsection}
 
@@ -221,6 +337,27 @@ This will use the algorithm in \cite{Czumaj00onthe}.
 \end{boxsection}
 \end{problem}
 
+The naive algorithm, for each finite sequence of length $u$, see if the second
+condition in the input holds, does pretty well if $u$ is small. In fact
+$O(nu^2)$ where $n$ is the length of the aperiodic part.
+
+\begin{code}
+import Data.List
+import Data.Maybe
+eventuallyPeriodic :: Eq a => [a] -> Int -> ([a], [a])
+eventuallyPeriodic sequence bound = (ini,take period rep)
+  where table      = map (take (bound+1)) (tails (map (take bound) (tails sequence)))
+        exist      = map (\x-> elemIndex (head x) (tail x)) table
+        period     = 1 + (fromJust $ head just)
+        (no, just) = span isNothing exist
+        (ini, rep) = splitAt (length no) sequence
+\end{code}
+
+Of course it can be improved to $O(nu)$ easily by using a smarter string
+search algorithm. Or even better, $O(n)$.[Implement them later]
+
+A variation of the problem could be the upper bound for length of the non-periodic 
+part of the sequence is known.
 \bibliography{bib}
 \bibliographystyle{plain}
 \end{document}
