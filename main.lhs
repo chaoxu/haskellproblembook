@@ -48,7 +48,7 @@
 \newtheorem{corollary}[theorem]{Corollary}
 
 \theoremstyle{definition}
-\newtheorem{problem}{Problem}[section]
+\newtheorem{pbm}{Problem}[section]
 \newtheorem{definition}{Definition}[section]
 \newtheorem{conjecture}{Conjecture}[section]
 \newtheorem{example}{Example}[section]
@@ -57,10 +57,19 @@
 \newtheorem*{remark}{Remark}
 \newtheorem*{note}{Note}
 
-\newenvironment{boxsection}[1]{~\\[-10pt]
-\begin{center}\begin{boxedminipage}{6in}\noindent \textbf{#1}
+\newenvironment{problem}{
+\noindent \begin{boxedminipage}{6.5in}
+\begin{pbm}
+~\\
+}
+{
+\end{pbm}
+	\end{boxedminipage}
+}
+\newenvironment{boxsection}[1]{
+\textbf{\emph{#1}}
 
-}{\end{boxedminipage}\end{center}}
+}{}
 %opening
 
 \title{Cookbook}
@@ -74,7 +83,7 @@
 \section{Exponentiation by squaring}
 
 \begin{problem}
-yy\begin{boxsection}{Input}
+\begin{boxsection}{Input}
 Given the operator $\cdot$, element $a$ and positive integer $n$. Where $a$ is
 an element of a semigroup under $\cdot$.
 \end{boxsection}
@@ -212,6 +221,10 @@ density function of $\{m_i\}$.
 Using an array would make it $O(d(n))$, but it is too imperative for our taste, 
 how about we only use list and achieve $O(d(n))$ time, elegantly?
 
+The idea is that we are summing the first item of infinite many stacks. However we
+don't have to really sum the infinite stacks, we only sum the stack we
+require.
+
 \begin{code}
 import Data.List
 rec :: Num a => [a] -> [a] -> [Int] -> [a]
@@ -224,11 +237,48 @@ rec c b m = a
           where val = if (k<length c) then [] else [sum $ zipWith (*) (reverse (map head xs)) b]
 \end{code}
 
-It's important to note the base case doesn't have to be a consective set of
-integers. It is better to feed a set of base cases as pairs instead.
-
-
 \chapter{Combinatorial Algorithms}
+\section{List of Lattice Points}
+
+\begin{problem}
+\begin{boxsection}{Input}
+Positive integer $k$.
+\end{boxsection}
+
+\begin{boxsection}{Output}
+A infinite list that contain all nonnegative lattice points in $k$-th
+dimension.
+\end{boxsection}
+
+\end{problem}
+
+\begin{code}
+nonNegativeLatticePoints k = concat $ map (sumToN k) [0..]
+  where sumToN k n 
+          | k == 1    = [[n]]
+          | otherwise = concat [(map (i:) (sumToN (k-1) (n-i))) | i<-[0..n]]
+\end{code}
+
+\begin{problem}
+\begin{boxsection}{Input}
+Positive integer $k$.
+\end{boxsection}
+
+\begin{boxsection}{Output}
+A infinite list that contain all lattice points in $k$-th
+dimension.
+\end{boxsection}
+
+\end{problem}
+
+To show an example, here is list of integers.
+
+\begin{code}
+integers :: [Integer]
+integers = (0:)$ concat $ zipWith (\x y -> [x,y]) [1..] (map negate [1..])
+\end{code}
+
+One want a way to be able to list all elements in the $k$-th dimension.
 \section{Integer Partitions}
 
 \begin{definition}[Integer Partition]
@@ -279,10 +329,10 @@ The infinite list of partition numbers.
 
 Naively, |0:map (length . integerPartitions) [1..]| works well, except the
 time complexity is $O(np(n))$, and $p(n)$ is exponential. A more
-well known approach, that only cost $\sqrt{n}$ additional to generate the
-$n$th number, will be given instead. 
+well known approach, that only cost $O(\sqrt{n})$ additional operations to 
+generate the $n$th number, will be given instead. 
 
-First, extend the definition of the partition number, such that $p(0)=1$ 
+Extend the definition of the partition number, such that $p(0)=1$ 
 and $p(-n)=0$ for all positive integer $n$. The partition number $p(n)$ has
 the relation
 \[
@@ -291,11 +341,9 @@ p(n) = \sum_{k=0}^\infty (-1)^k (p(n-p_{2k+1})+p(n-p_{2k+2}))
 where $p_n$ is the sequence of generalized pentagonal number.
 
 We have already developed the tools to work with this kind of recurrence in
-section \label{nicerec}.
+section \ref{nicerec}.
 \begin{code}
 
-integers :: [Integer]
-integers = (0:)$ concat $ zipWith (\x y -> [x,y]) [1..] (map negate [1..])
 
 generalizedPentagonalNumbers :: [Integer]
 generalizedPentagonalNumbers = [(3 * n^2 - n) `div` 2|n<-integers]
@@ -358,6 +406,8 @@ search algorithm. Or even better, $O(n)$.[Implement them later]
 
 A variation of the problem could be the upper bound for length of the non-periodic 
 part of the sequence is known.
+
+
 \bibliography{bib}
 \bibliographystyle{plain}
 \end{document}
