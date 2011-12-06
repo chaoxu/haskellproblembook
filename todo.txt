@@ -26,6 +26,7 @@ Automatic Groups
 Randomization:
 Some probability related stuffs
 
+Searching in partial orders?
 
 Computational Geometry:
 OMG CG in Haskell, I don't think anyone has done that yet. 
@@ -46,6 +47,8 @@ type inference algorthm
 Sethi-Ullman algorithm
 Some information theory algorithms, include hamming codes, arithmetic coding(OMG)
 DB related things???
+Coffman–Graham algorithm
+interval arithmetic
 
 Parsing,context-free, regular language, logic:
 CYK, Early Parser, NFA minimization, DFA minimization, NFA to DFA
@@ -53,6 +56,8 @@ Regular Expression to DFA/NFA and back.
 Tarski–Kuratowski algorithm
 Knuth–Bendix completion algorithm[Term Rewriting]
 The Fastest and Shortest Algorithm for All Well-Defined Problems
+Truth table to boolean formula
+
 
 Data Structures:
 vEB tree(possible?), actually this is a research area, should look into it.

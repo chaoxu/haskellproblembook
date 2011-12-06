@@ -14,7 +14,6 @@
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{mathrsfs}
 \usepackage{boxedminipage}
-%\usepackage[x11names, rgb]{xcolor}
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
 \usepackage{multicol}
@@ -236,6 +235,67 @@ rec c b m = a
           | otherwise = val ++ next (map tail xs) (k+1) (m:ms)
           where val = if (k<length c) then [] else [sum $ zipWith (*) (reverse (map head xs)) b]
 \end{code}
+
+\section{Canonical forms of a boolean function}
+One can always describe a boolean function $f$ over $n$ variables to a list of
+$2^n$ boolean values, by mapping it into a function $g$.
+
+\[
+f(x_n,\ldots, x_1) = g(\sum_{i=1}^n 2^{i-1}x_i)
+\]
+
+\subsection{Sum of minterms}
+\begin{problem}
+\begin{boxsection}{Input}
+A list of values of $\{0,1\}$, of length $2^n$.
+\end{boxsection}
+
+\begin{boxsection}{Output}
+Find a function of the following form that also generate the same list.
+\[
+\bigvee_{y\in Y} (\bigwedge_{x\in y} x)
+\]
+Where each $x$ is either $x_i$ or $\neg x_i$ for some $i$. 
+$Y$ can be described by a list of lists. Use $i$ to denote
+$x_i$ and $-i$ to denote $x_i$.
+
+\end{boxsection}
+\end{problem}
+
+\subsection{Product of maxterms}
+\begin{problem}
+\begin{boxsection}{Input}
+Input the same as the sum of minterms.
+\end{boxsection}
+
+\begin{boxsection}{Output}
+Find a function of the following form that also generate the same list.
+\[
+\bigwedge_{y\in Y} (\bigvee_{x\in y} x)
+\]
+Output $Y$.
+\end{boxsection}
+
+\end{problem}
+
+\subsection{Implementation}
+\begin{code}
+import Data.Digits
+import Data.List
+import Data.List.Utils
+
+sumOfMinterms     = snd.booleanCanonicalForm
+productOfMaxterms = fst.booleanCanonicalForm
+
+booleanCanonicalForm :: Integral a => [a] -> ([[a]], [[a]])
+booleanCanonicalForm values = (snd $ unzip pos, snd $ unzip sop)
+               where (pos,sop) = partition (\(x,y) -> x==0) (zip values power)
+                     power     = map (terms . (replace [0] [-1]) . pad . digitsRev 2) [0..]
+                     terms d   = zipWith (*) d [1..]
+                     pad a     = a ++ replicate (n-(length a)) 0
+                     n         = floor $ logBase 2 (fromIntegral (length values))
+\end{code}
+
 
 \chapter{Combinatorial Algorithms}
 \section{List of Lattice Points}
