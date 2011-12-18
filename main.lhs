@@ -236,6 +236,11 @@ rec c b m = a
           where val = if (k<length c) then [] else [sum $ zipWith (*) (reverse (map head xs)) b]
 \end{code}
 
+This kind of problem can be thought of moving the pointer of to $a_n$ from
+$a_{n-1}$, how does the pointers that originally pointing to all the elements
+$a_{n-1}$ requires to sum should move to now? This is a extra complication
+required when an array is not accessable.
+
 \section{Canonical forms of a boolean function}
 One can always describe a boolean function $f$ over $n$ variables to a list of
 $2^n$ boolean values, by mapping it into a function $g$.
@@ -430,6 +435,9 @@ A word $p$ is primitive if $p=w^k$ implies $k=1$.
 This will use the algorithm in \cite{Czumaj00onthe}. [Nah, just KMP...]
 
 \section{Period of a eventually periodic sequence}
+A sequence is eventually periodic if it is a concatination of a finite
+sequence and a periodic sequence.
+\subsection{Knows the upper bound of the period and a certain condition}
 \begin{problem}
 \begin{boxsection}{Input}
 \begin{enumerate}
@@ -447,7 +455,7 @@ This will use the algorithm in \cite{Czumaj00onthe}. [Nah, just KMP...]
 
 The naive algorithm, for each finite sequence of length $u$, see if the second
 condition in the input holds, does pretty well if $u$ is small. In fact
-$O(nu^2)$ where $n$ is the length of the aperiodic part.
+$O((n+u)u^2)$ where $n$ is the length of the aperiodic part.
 
 \begin{code}
 import Data.List
@@ -461,12 +469,50 @@ eventuallyPeriodic sequence bound = (ini,take period rep)
         (ini, rep) = splitAt (length no) sequence
 \end{code}
 
-Of course it can be improved to $O(nu)$ easily by using a smarter string
-search algorithm. Or even better, $O(n)$.[Implement them later]
+Of course it can be improved to $O((n+u)u)$ easily by using a smarter string
+search algorithm like KMP. Under a simple observation $O(n+u)$ is the
+possible.
+
+The algorithm can be abstracted as another sequence. Given a sequence $a$ in
+the problem, and a $u$, we can define another sequence $b$, such that $b_i$ is
+true if and only if $a_i$ meets condition two. $b_i = Fasle,\ldots,False,True,\ldots$, and the $False$ correspond to the finite
+part. In this sense, it become obvious a binary search would suffice, and one
+can construct a solution in $O(n+u + u\log(n+u))$ time.
+
+To make it truly $O(n+u)$, we need to get $u\log(n+u) = O(n+u)$. How so, when
+we don't even know what $n$ is? Only when $n$ is very small would
+$u\log(n+u)>n$. Consider the following hackish algorithm:
+
+$O(n+u)$ is clearly the lowerbound, one must read to the $n+u$th position in
+the sequence to be able to decide the periodic part.
+
+Check if the condition is true for $b_{ku}$, where $k$ is a integer. 
+After $(n+u)/u+1$ tests are required figure out which $u$ positions can be 
+the start of the periodic sequence. We know this can be done in
+$O((n+u)/u\times u) = O(n+u)$ time. 
+
+This the problem really reduce to can we find a the first substring of length
+$u$ that appears twice in a string of length $2u$ in $O(u)$ time.
 
 A variation of the problem could be the upper bound for length of the non-periodic 
 part of the sequence is known.
 
+\subsection{Upper bound of the length of the non-periodic part and
+upper bound of the period are known}
+\begin{problem}
+\begin{boxsection}{Input}
+\begin{enumerate}
+  \item A infinite list that represent a eventually periodic sequence.
+  \item A integer of the upper bound $u$ of the period.
+  \item A integer $n$ represent the upper bound on the length of the
+  non-periodic part of the sequence.
+\end{enumerate} 
+\end{boxsection}
+
+\begin{boxsection}{Output}
+  A pair of the initial sequence and the periodic part.
+\end{boxsection}
+\end{problem}
 
 \bibliography{bib}
 \bibliographystyle{plain}

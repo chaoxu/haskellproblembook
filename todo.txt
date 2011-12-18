@@ -9,6 +9,7 @@ List Shuffle (sadly must be O(n log n) time)
 List permutation
 LCS, LIS, SCS
 n-D matrix matching(list implmentation in linear time too?)
+Aho–Corasick string matching algorithm
 
 Algebra/Number Theory:
 Chien Search[Finite fields]
@@ -49,7 +50,7 @@ Some information theory algorithms, include hamming codes, arithmetic coding(OMG
 DB related things???
 Coffman–Graham algorithm
 interval arithmetic
-
+Game theory 
 Parsing,context-free, regular language, logic:
 CYK, Early Parser, NFA minimization, DFA minimization, NFA to DFA
 Regular Expression to DFA/NFA and back.
@@ -63,3 +64,5 @@ Data Structures:
 vEB tree(possible?), actually this is a research area, should look into it.
 
 No numerical algorithms. Since I do not want to deal with real numbers here.
+
+Of course, Chazelle's triangulation algorithm should be on any cookbook.
