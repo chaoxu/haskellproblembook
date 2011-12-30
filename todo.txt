@@ -23,6 +23,9 @@ Miller-Rabin
 System of linear congruence solver
 Some matrix related codes(include FFT)
 Automatic Groups
+Euler Phi
+Modular arithmetic as Monad
+
 
 Randomization:
 Some probability related stuffs
@@ -38,7 +41,7 @@ Linear Programming
 stable marriage problem
 Hungarian algorithm,Hopcroft–Karp algorithm
 Fibonacci search technique
-Graphs in general. DFS, Toplogical sort, BFS, Shortest Path, all pair shortest path, MST
+Graphs in general. DFS, Toplogical sort, BFS, Shortest Path, all pair shortest path, MST, k-th shortest path
 Network flows
 Sorting Network in functional language?
 Day of the week
@@ -58,7 +61,14 @@ Tarski–Kuratowski algorithm
 Knuth–Bendix completion algorithm[Term Rewriting]
 The Fastest and Shortest Algorithm for All Well-Defined Problems
 Truth table to boolean formula
+Algorithmic Lovász local lemma
+Alias method and other probability related algorithms
+Guess a random rational number
+continued fractions as real number representation
+Gosper's algorithm. Other stuff from the book A=B
+Expander graph construction
 
+wavelet transform
 
 Data Structures:
 vEB tree(possible?), actually this is a research area, should look into it.

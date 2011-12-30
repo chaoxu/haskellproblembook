@@ -71,13 +71,28 @@
 }{}
 %opening
 
-\title{Cookbook}
+\title{Algorithmic Recipes in Haskell}
 \date{Last update: \today}
 \author{Chao Xu}
 \begin{document}
 \maketitle
 \setcounter{tocdepth}{1}
 \tableofcontents
+\chapter{Exact Numerical Algorithms}
+\section{Continued Fraction Representation}
+Continued fractions can be used to represent real numbers in a much more
+natrual way than decimal notations. In fact, the arithmetic operations are not
+difficult for continued fractions.
+
+A continued fraction can be implemented as a list of integers. There is one
+operation that works for all arithmetics of continued fraction. All other ones
+can be derived.
+
+\subsection{The main arithmetic operation}
+The algorithm is derived by Bill Gosper. The algorithm here is directly
+modeled after is Mark Jason Dominus's talk.
+
+\href{https://github.com/Mgccl/mgccl-haskell/blob/master/random/ContinuedFraction.hs}{Link of current implementation}.
 \chapter{Algebraic Algorithms}
 \section{Exponentiation by squaring}
 
