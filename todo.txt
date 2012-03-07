@@ -67,6 +67,8 @@ Guess a random rational number
 continued fractions as real number representation
 Gosper's algorithm. Other stuff from the book A=B
 Expander graph construction
+Algorithms for Ordinal Arithmetic
+
 
 wavelet transform
 
