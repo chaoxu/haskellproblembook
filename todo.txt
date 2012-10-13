@@ -11,6 +11,7 @@ LCS, LIS, SCS
 n-D matrix matching(list implmentation in linear time too?)
 Aho–Corasick string matching algorithm
 
+
 Algebra/Number Theory:
 Chien Search[Finite fields]
 Group Isomorphism
@@ -25,7 +26,10 @@ Some matrix related codes(include FFT)
 Automatic Groups
 Euler Phi
 Modular arithmetic as Monad
-
+Computation of Factorials
+Integer Multiplication
+Arithmetic of algebraic numbers
+Spigot Algorithm
 
 Randomization:
 Some probability related stuffs
@@ -35,6 +39,7 @@ Searching in partial orders?
 Computational Geometry:
 OMG CG in Haskell, I don't think anyone has done that yet. 
 To make it nice, I will only do things with integers.
+Rotating Calipers
 
 Combinatorial,Other:
 Linear Programming
@@ -54,24 +59,39 @@ DB related things???
 Coffman–Graham algorithm
 interval arithmetic
 Game theory 
-Parsing,context-free, regular language, logic:
-CYK, Early Parser, NFA minimization, DFA minimization, NFA to DFA
-Regular Expression to DFA/NFA and back.
-Tarski–Kuratowski algorithm
-Knuth–Bendix completion algorithm[Term Rewriting]
-The Fastest and Shortest Algorithm for All Well-Defined Problems
-Truth table to boolean formula
 Algorithmic Lovász local lemma
 Alias method and other probability related algorithms
 Guess a random rational number
 continued fractions as real number representation
 Gosper's algorithm. Other stuff from the book A=B
 Expander graph construction
+Planar Max-cut
+greedy coin change checker
+DC circuit
+
+Abstract machines, Parsing,context-free, regular language, logic:
+CYK, Early Parser, NFA minimization, DFA minimization, NFA to DFA
+Regular Expression to DFA/NFA and back.
+Tarski–Kuratowski algorithm
+Knuth–Bendix completion algorithm[Term Rewriting]
+The Fastest and Shortest Algorithm for All Well-Defined Problems
+Truth table to boolean formula
+Finite state transducer
+Parallel, serieal circuits, circuit analysis algorithm
 
 wavelet transform
+Find the integral of a unknown polynomial
+
+Dynamic Programming
+How to accelerate DP:
+Total-Monotonicity(Knuth-Yao Quadrangle-Inequality is a consequence)
+Convexity (Find largest interval average)
+
 
 Data Structures:
 vEB tree(possible?), actually this is a research area, should look into it.
+Lowest common ancestor query
+RMQ
 
 No numerical algorithms. Since I do not want to deal with real numbers here.
 

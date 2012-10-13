@@ -529,6 +529,23 @@ upper bound of the period are known}
 \end{boxsection}
 \end{problem}
 
+\chapter{Other Recipes}
+\section{Simulate a biased coin}
+
+\section{Random element from a finite discrete distribution}
+\begin{problem}
+\begin{boxsection}{Input}
+Probability distribution of $n$ events as $p_1/q_1,\ldots,p_n/q_n$.
+\end{boxsection}
+
+\begin{boxsection}{Query}
+\begin{enumerate}
+\item input null, randomly pick an event depend on the distribution.
+\end{enumerate}
+\end{boxsection}
+\end{problem}
+This can be done with $O(n)$ preprocessing time, $O(n)$ space and
+$O(\log Q)$, where $Q = \max_{1\leq i\leq n} \{q_i\}$.
 \bibliography{bib}
 \bibliographystyle{plain}
 \end{document}
