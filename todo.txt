@@ -30,6 +30,7 @@ Computation of Factorials
 Integer Multiplication
 Arithmetic of algebraic numbers
 Spigot Algorithm
+fast GCD
 
 Randomization:
 Some probability related stuffs
@@ -78,6 +79,8 @@ The Fastest and Shortest Algorithm for All Well-Defined Problems
 Truth table to boolean formula
 Finite state transducer
 Parallel, serieal circuits, circuit analysis algorithm
+Algorithms for Ordinal Arithmetic
+
 
 wavelet transform
 Find the integral of a unknown polynomial
